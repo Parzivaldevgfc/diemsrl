@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIEM srl - Office Automation Campobasso</title>
+    <!-- META TAG SEO -->
+    <meta name="description" content="DIEM srl a Campobasso è specializzata in software gestionali per aziende e liberi professionisti. Soluzioni personalizzate, assistenza tecnica e digitalizzazione dei processi aziendali.">
+    <meta name="keywords" content="software gestionali Campobasso, gestionale aziendale, digitalizzazione imprese, consulenza informatica Molise, sistemi gestionali, assistenza IT Campobasso, automazione ufficio, Diem srl">
+    <meta name="author" content="DIEM srl">
+    <meta name="robots" content="index, follow">
+
+    <!-- OPEN GRAPH (per condivisioni social) -->
+    <meta property="og:title" content="DIEM srl – Software Gestionali a Campobasso">
+    <meta property="og:description" content="Software gestionali personalizzati per aziende e professionisti. DIEM srl – Innovazione e automazione per la tua impresa.">
+    <meta property="og:image" content="https://www.tuodominio.it/img/preview.jpg">
+    <meta property="og:url" content="https://www.tuodominio.it">
+    <meta property="og:type" content="website">
+
+    <!-- TWITTER CARD -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DIEM srl – Software Gestionali a Campobasso">
+    <meta name="twitter:description" content="Soluzioni software personalizzate per aziende e professionisti. Innovazione, efficienza e supporto costante.">
+    <meta name="twitter:image" content="https://www.tuodominio.it/img/preview.jpg">
+
+    <link rel="icon" type="image/png" href="img/favicon.ico">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #1a365d;
+            background: #f8fafc;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 1.5rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(30, 64, 175, 0.3);
+            transition: all 0.3s;
+        }
+
+        header.scrolled {
+            padding: 1rem 5%;
+            box-shadow: 0 6px 30px rgba(30, 64, 175, 0.4);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            height: 50px;
+            width: auto;
+            transition: all 0.3s;
+        }
+
+        header.scrolled .logo {
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: all 0.3s;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 80%;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .hero {
+    background: 
+  linear-gradient(rgba(30, 64, 175, 0.7), rgba(59, 130, 246, 0.7)),
+  url("img/bg.png") center/cover no-repeat;
+    color: white;
+    padding: 150px 5% 120px;
+    text-align: center;
+    margin-top: 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        /* Servizi */
+#servizi {
+    background: url("img/bg-servizi.jpg") center/cover no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+/* Chi siamo */
+/*chi-siamo {
+    background: url("img/bg-chi-siamo.jpg") center/cover no-repeat;
+    background-size: cover;
+    color: white;
+}
+--]
+/* Partner */
+.partners {
+    background: url("img/bg-partners.jpg") center/cover no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+        .printer-icon {
+            display: inline-block;
+            margin: 2rem 0 4rem 0; /* Changed bottom margin from 2rem to 4rem */
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .printer {
+            width: 180px;
+            height: 120px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 15px;
+            position: relative;
+            margin: 0 auto;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+
+        .printer-top {
+            width: 100%;
+            height: 25px;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            border-radius: 15px 15px 0 0;
+            position: relative;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .printer-top::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            right: 15px;
+            width: 8px;
+            height: 8px;
+            background: #60a5fa;
+            border-radius: 50%;
+            box-shadow: -15px 0 0 #60a5fa, -30px 0 0 #60a5fa;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .printer-body {
+            position: relative;
+            padding: 15px;
+        }
+
+        .printer-slot {
+            width: 120px;
+            height: 8px;
+            background: #cbd5e1;
+            margin: 0 auto 10px;
+            border-radius: 4px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .printer-tray {
+            width: 140px;
+            height: 15px;
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+            margin: 10px auto 0;
+            border-radius: 0 0 8px 8px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .printer-paper {
+            width: 90px;
+            height: 60px;
+            background: white;
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            border-radius: 3px;
+            animation: printPaper 4s infinite ease-in-out;
+        }
+
+        .printer-paper::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);
+            box-shadow: 0 8px 0 #3b82f6, 0 16px 0 #3b82f6, 0 24px 0 #60a5fa;
+            border-radius: 2px;
+        }
+
+        .printer-paper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.1) 100%);
+            animation: printing 2s infinite linear;
+        }
+
+        @keyframes printing {
+            0% { height: 0%; }
+            100% { height: 100%; }
+        }
+
+        @keyframes printPaper {
+            0%, 100% { 
+                bottom: -25px; 
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            50% { 
+                bottom: -70px; 
+                opacity: 1;
+            }
+            90% {
+                opacity: 0.5;
+            }
+        }
+
+        .printer-button {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 12px;
+            height: 12px;
+            background: #3b82f6;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+            }
+            50% { 
+                transform: scale(1.2);
+                box-shadow: 0 0 20px rgba(59, 130, 246, 1);
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #1e40af;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s;
+            animation: fadeInUp 1s ease 0.6s backwards;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .section {
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #1e40af;
+            position: relative;
+            display: block;  /* Changed from inline-block */
+            left: auto;      /* Remove left positioning */
+            transform: none; /* Remove transform */
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #1e40af, #3b82f6, #60a5fa);
+            transition: width 0.8s ease;
+            border-radius: 2px;
+        }
+
+        .section.visible .section-title::after {
+            width: 100%;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 25px rgba(30, 64, 175, 0.1);
+            transition: all 0.4s;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .section.visible .feature-card {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section.visible .feature-card:nth-child(1) { transition-delay: 0.1s; }
+        .section.visible .feature-card:nth-child(2) { transition-delay: 0.2s; }
+        .section.visible .feature-card:nth-child(3) { transition-delay: 0.3s; }
+        .section.visible .feature-card:nth-child(4) { transition-delay: 0.4s; }
+        .section.visible .feature-card:nth-child(5) { transition-delay: 0.5s; }
+        .section.visible .feature-card:nth-child(6) { transition-delay: 0.6s; }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #1e40af, #3b82f6, #60a5fa);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(30, 64, 175, 0.2);
+            border-color: #3b82f6;
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .feature-card h3 {
+            color: #1e40af;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card p {
+            color: #475569;
+        }
+
+        .about-content {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            padding: 3rem;
+            border-radius: 20px;
+            line-height: 1.9;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 30px rgba(30, 64, 175, 0.1);
+            border-left: 5px solid #1e40af;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .section.visible .about-content {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .partners {
+            background: white;
+            padding: 60px 5%;
+            text-align: center;
+        }
+
+        .partner-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .partner-logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1e40af;
+            padding: 2rem 3rem;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(30, 64, 175, 0.15);
+            transition: all 0.5s;
+            opacity: 0;
+            transform: scale(0.8);
+            text-decoration: none; /* Add this */
+            display: inline-block; /* Add this */
+        }
+
+        .section.visible .partner-logo {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .section.visible .partner-logo:nth-child(1) { transition-delay: 0.2s; }
+        .section.visible .partner-logo:nth-child(2) { transition-delay: 0.4s; }
+
+        .partner-logo:hover {
+            transform: scale(1.1) rotate(-2deg);
+            box-shadow: 0 10px 30px rgba(30, 64, 175, 0.25);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        footer a {
+  color: inherit;          /* usa lo stesso colore del testo circostante */
+  text-decoration: none;   /* rimuove la sottolineatura */
+  font-weight: 500;
+  transition: opacity 0.3s ease;
+}
+
+footer a:hover {
+  opacity: 0.7;            /* effetto leggero al passaggio del mouse */
+}
+
+.partner-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.partner-logo img {
+  height: 60px;
+  filter: grayscale(100%);
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.partner-logo img:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+        .contact-info {
+            margin: 2rem 0;
+            font-size: 1.1rem;
+        }
+
+        .contact-info p {
+            margin: 0.5rem 0;
+            transition: all 0.3s;
+        }
+
+        .contact-info p:hover {
+            transform: translateX(5px);
+        }
+
+        .falling-papers {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .falling-paper {
+            position: absolute;
+            width: 40px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+            animation: falling linear infinite;
+        }
+
+        .falling-paper::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 8px;
+            right: 8px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 0 rgba(255, 255, 255, 0.3), 
+                       0 16px 0 rgba(255, 255, 255, 0.3),
+                       0 24px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes falling {
+            0% {
+                transform: translateY(-100%) rotate(5deg) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(100vh) rotate(-10deg) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        /* Paper variations */
+        .falling-paper:nth-child(1) { left: 5%; animation-duration: 10s; animation-delay: 0s; transform: scale(0.8); }
+        .falling-paper:nth-child(2) { left: 25%; animation-duration: 14s; animation-delay: 2s; transform: scale(1.2); }
+        .falling-paper:nth-child(3) { left: 45%; animation-duration: 12s; animation-delay: 4s; transform: scale(0.9); }
+        .falling-paper:nth-child(4) { left: 65%; animation-duration: 15s; animation-delay: 1s; transform: scale(1.1); }
+        .falling-paper:nth-child(5) { left: 85%; animation-duration: 13s; animation-delay: 3s; transform: scale(1); }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .logo {
+                height: 40px;
+            }
+
+            header.scrolled .logo {
+                height: 35px;
+            }
+
+            .printer {
+                width: 160px;    /* Adjusted width */
+                height: 100px;   /* Adjusted height */
+            }
+
+            .printer-top {
+                height: 20px;    /* Reduced top height */
+            }
+
+            .printer-top::after {
+                top: 6px;        /* Adjusted LED position */
+                width: 6px;      /* Smaller LEDs */
+                height: 6px;
+                right: 10px;
+                box-shadow: -12px 0 0 #60a5fa, -24px 0 0 #60a5fa;
+            }
+
+            .printer-slot {
+                width: 110px;    /* Adjusted slot width */
+                height: 6px;     /* Smaller slot height */
+                margin: 0 auto 8px;
+            }
+
+            .printer-tray {
+                width: 130px;    /* Adjusted tray width */
+                height: 12px;    /* Smaller tray height */
+            }
+
+            .printer-paper {
+                width: 80px;     /* Adjusted paper width */
+                height: 50px;    /* Adjusted paper height */
+                bottom: -20px;   /* Adjusted paper position */
+            }
+
+            .printer-button {
+                width: 10px;     /* Smaller button */
+                height: 10px;
+                bottom: 15px;
+                left: 15px;
+            }
+
+            .printer-paper::before {
+                top: 10px;       /* Adjusted paper lines */
+                left: 10px;
+                right: 10px;
+                height: 2px;
+                box-shadow: 0 6px 0 #3b82f6, 0 12px 0 #3b82f6, 0 18px 0 #60a5fa;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <nav>
+            <img src="logo.png" alt="DIEM srl" class="logo">
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#servizi">Servizi</a></li>
+                <li><a href="#chi-siamo">Chi Siamo</a></li>
+                <li><a href="#contatti">Contatti</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="falling-papers">
+            <div class="falling-paper"></div>
+            <div class="falling-paper"></div>
+            <div class="falling-paper"></div>
+            <div class="falling-paper"></div>
+            <div class="falling-paper"></div>
+        </div>
+        <div class="hero-content">
+            <h1>Leader in Office Automation</h1>
+            <p>Innovazione, affidabilità e attenzione al servizio per il tuo business</p>
+            
+            <div class="printer-icon">
+                <div class="printer">
+                    <div class="printer-top"></div>
+                    <div class="printer-body">
+                        <div class="printer-slot"></div>
+                        <div class="printer-slot"></div>
+                        <div class="printer-tray"></div>
+                    </div>
+                    <div class="printer-button"></div>
+                    <div class="printer-paper"></div>
+                </div>
+            </div>
+            
+            <br>
+            <a href="#contatti" class="cta-button">Contattaci Ora</a>
+        </div>
+    </section>
+
+    <section id="servizi" class="section">
+        <h2 class="section-title">I Nostri Servizi</h2>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🖨️</div>
+                <h3>Office Automation</h3>
+                <p>Soluzioni complete per l'automazione del tuo ufficio con tecnologie all'avanguardia e alti rendimenti.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📄</div>
+                <h3>Gestione Documentale</h3>
+                <p>Sistemi avanzati per la gestione efficiente dei documenti aziendali e workflow ottimizzati.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💻</div>
+                <h3>Software Gestionali</h3>
+                <p>Le più avanzate soluzioni software per rispondere alle specifiche esigenze di ogni ambiente di lavoro.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛠️</div>
+                <h3>Assistenza Tecnica</h3>
+                <p>Supporto dedicato, disponibilità e cura del particolare per garantire continuità operativa.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚙️</div>
+                <h3>Soluzioni Integrate</h3>
+                <p>Progetti su misura che integrano hardware, software e servizi per ottimizzare il tuo business.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Consulenza</h3>
+                <p>Analisi delle esigenze e progettazione di soluzioni tecnologiche e metodologiche personalizzate.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="chi-siamo" class="section">
+        <h2 class="section-title">Chi Siamo</h2>
+        <div class="about-content">
+            <p>La <strong>DIEM srl</strong>, leader in Molise nel mercato dell'Office Automation, rivenditore certificato Ricoh e Solution Partner Sistemi, offre affidabilità, innovazione, ma anche attenzione al servizio, cura del particolare e disponibilità.</p>
+            <br>
+            <p>Da sempre riveste un ruolo di leadership nella fornitura di prodotti e servizi tecnologici, metodologici e progettuali rivolti all'ambiente Office e alla gestione documentale.</p>
+            <br>
+            <p>Attraverso la vasta gamma di apparecchiature basate su tecnologie all'avanguardia ad alti rendimenti e all'offerta delle più avanzate soluzioni software gestionali, la Diem è in grado di rispondere alle specifiche esigenze di ogni ambiente di lavoro.</p>
+        </div>
+    </section>
+
+<section class="partners section">
+  <h2 class="section-title">I Nostri Partner</h2>
+  <div class="partner-logos">
+    <a href="https://www.ricoh.it/" target="_blank" class="partner-logo">
+      <img src="img/logo-ricoh.png" alt="Ricoh logo">
+    </a>
+    <a href="https://www.sistemi.com/" target="_blank" class="partner-logo">
+      <img src="img/logo-sistemi.png" alt="Sistemi logo">
+    </a>
+  </div>
+</section>
+
+<footer id="contatti">
+  <div class="footer-content">
+    <h2>DIEM srl</h2>
+    <div class="contact-info">
+      <p>
+        📍 
+        <a 
+          href="https://www.google.com/maps?q=Diem+srl,+Via+Tommaso+Mosca+4,+86100+Campobasso+CB,+Molise" 
+          target="_blank" 
+          rel="noopener noreferrer"
+        >
+          Diem srl, Via Tommaso Mosca, 4, 86100 Campobasso CB, Molise
+        </a>
+      </p>
+      <p>📧 <a href="mailto:info@diem.srl">info@diem.srl</a></p>
+      <p>📞 <a href="tel:+390874482229">0874 482229</a></p>
+    </div>
+    <p style="margin-top: 2rem; opacity: 0.8;">
+      © 2025 DIEM srl P.IVA 01648120705 - Office Automation & Gestione Documentale
+    </p>
+  </div>
+</footer>
+
+
+    <script>
+        // Smooth scroll con effetti bellissimi
+        const sections = document.querySelectorAll('.section');
+        const header = document.getElementById('header');
+
+        // Osservatore per le sezioni
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Effetto header scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mostra prima sezione immediatamente
+        setTimeout(() => {
+            sections[0]?.classList.add('visible');
+        }, 100);
+    </script>
+</body>
+</html>
