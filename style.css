@@ -230,48 +230,95 @@
             background: rgba(255,255,255,0.2);
         }
 
-        .hero {
-    background: 
-  linear-gradient(rgba(30, 64, 175, 0.7), rgba(59, 130, 246, 0.7)),
-  url("img/bg.png") center/cover no-repeat;
-    color: white;
-    padding: 150px 5% 120px;
-    text-align: center;
-    margin-top: 80px;
-    position: relative;
-    overflow: hidden;
+.hero {
+  background: 
+    linear-gradient(rgba(30, 64, 175, 0.7), rgba(59, 130, 246, 0.3)),
+    url("img/bg.png") center/cover no-repeat;
+  color: white;
+  padding: 150px 5% 120px;
+  text-align: center;
+  margin-top: 80px;
+  position: relative;
+  overflow: hidden;
 }
 
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+}
 
+.hero-content {
+  position: relative;
+  z-index: 10;
+}
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
-        }
+.hero h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  animation: fadeInUp 1s ease;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+}
 
-        .hero-content {
-            position: relative;
-            z-index: 10;
-        }
+.hero p {
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
+  animation: fadeInUp 1s ease 0.2s backwards;
+}
 
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-        }
+/* 📱 Tablet */
+@media (max-width: 1024px) {
+  .hero {
+    padding: 120px 5% 100px;
+  }
 
-        .hero p {
-            font-size: 1.4rem;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.2s backwards;
-        }
+  .hero h1 {
+    font-size: 2.8rem;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+  }
+}
+
+/* 📱 Smartphone orizzontale */
+@media (max-width: 768px) {
+  .hero {
+    padding: 100px 5% 80px;
+    margin-top: 60px;
+  }
+
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+}
+
+/* 📱 Smartphone piccolo (es. iPhone SE) */
+@media (max-width: 480px) {
+  .hero {
+    padding: 80px 5% 60px;
+    margin-top: 50px;
+  }
+
+  .hero h1 {
+    font-size: 1.8rem;
+    line-height: 1.3;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+  }
+}
+
 
         /* Servizi */
 #servizi {
@@ -445,6 +492,30 @@
 .whatsapp-fab img{ display:block; width: 56px; height: 56px; object-fit: contain; transition: transform 140ms ease; }
 .whatsapp-fab:hover img{ transform: scale(1.02); }
 
+/* Bubble sopra il pulsante WhatsApp: visibile solo su hover */
+.whatsapp-bubble{
+    position: absolute;
+    bottom: 72px;
+    right: 0;
+    background: linear-gradient(90deg,#25D366,#128C7E);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+    transition: all 180ms ease;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.whatsapp-fab:hover .whatsapp-bubble{
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
 /* Slight attention animation */
 @keyframes waPulse { 0%{ transform: scale(1); } 50%{ transform: scale(1.06); } 100%{ transform: scale(1); } }
 .whatsapp-fab{ animation: waPulse 3.6s ease-in-out infinite; }
@@ -452,6 +523,7 @@
 @media (max-width:480px){
     .whatsapp-fab{ right: 14px; bottom: 14px; width: 48px; height: 48px; }
     .whatsapp-fab img{ width: 48px; height: 48px; }
+    .partner-kyocera { height: 64px; }
 }
 
 /* Subfooter credits */
@@ -475,6 +547,8 @@
 @media (max-width:480px){
     .subfooter-inner{ font-size: 0.85rem; }
 }
+
+/* stampante hero: visibile (regola temporanea rimossa) */
 
         @keyframes printPaper {
             0%, 100% { 
@@ -550,31 +624,30 @@
         }
 
         .section-title {
-            font-size: 2.5rem;
+            font-size: 2.4rem;
             text-align: center;
-            margin-bottom: 3rem;
-            color: #1e40af;
+            margin-bottom: 2.4rem;
+            color: #0f172a;
             position: relative;
-            display: block;  /* Changed from inline-block */
-            left: auto;      /* Remove left positioning */
-            transform: none; /* Remove transform */
+            font-weight: 700;
+            letter-spacing: 0.2px;
         }
 
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -14px;
             left: 50%;
             transform: translateX(-50%);
-            width: 0;
-            height: 4px;
+            width: 120px;
+            height: 6px;
             background: linear-gradient(90deg, #1e40af, #3b82f6, #60a5fa);
-            transition: width 0.8s ease;
-            border-radius: 2px;
+            border-radius: 6px;
+            box-shadow: 0 6px 18px rgba(30,64,175,0.12);
         }
 
         .section.visible .section-title::after {
-            width: 100%;
+            width: 120px;
         }
 
         .features {
@@ -585,16 +658,16 @@
         }
 
         .feature-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 5px 25px rgba(30, 64, 175, 0.1);
-            transition: all 0.4s;
-            border: 2px solid transparent;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            padding: 2rem 2.2rem;
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(16,24,40,0.06);
+            transition: transform 300ms ease, box-shadow 300ms ease;
+            border: 1px solid rgba(30,64,175,0.04);
             position: relative;
             overflow: hidden;
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(18px);
         }
 
         .section.visible .feature-card {
@@ -620,30 +693,41 @@
         }
 
         .feature-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(30, 64, 175, 0.2);
-            border-color: #3b82f6;
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(16,24,40,0.12);
+            border-color: rgba(59,130,246,0.12);
         }
 
         .feature-icon {
-            font-size: 3.5rem;
+            font-size: 2.4rem;
             margin-bottom: 1rem;
-            display: inline-block;
-            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            background: linear-gradient(135deg,#eef2ff,#e0f2fe);
+            color: #1e40af;
+            transition: transform 200ms ease, box-shadow 200ms ease;
         }
 
         .feature-card:hover .feature-icon {
-            transform: scale(1.2) rotate(5deg);
+            transform: scale(1.12) rotate(3deg);
+            box-shadow: 0 8px 20px rgba(16,24,40,0.06);
         }
 
         .feature-card h3 {
-            color: #1e40af;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
+            color: #0f172a;
+            margin-bottom: 0.6rem;
+            font-size: 1.25rem;
+            font-weight: 700;
         }
 
         .feature-card p {
             color: #475569;
+            line-height: 1.6;
+            margin: 0;
         }
 
         .about-content {
@@ -726,8 +810,97 @@
   transition: opacity 0.3s ease;
 }
 
+/* About section grid for image + text */
+.about-grid{
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 2rem;
+    align-items: center;
+}
+.about-image img{ width: 100%; height: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+
+@media (max-width: 900px){
+    .about-grid{ grid-template-columns: 1fr; }
+    .about-image{ order: -1; }
+}
+
+/* Contatti: layout a due colonne con mappa */
+.contacts .lead{
+    max-width: 900px;
+    margin: 0 auto 1.5rem;
+    color: #1e293b;
+}
+
+.contact-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: stretch; /* stretch so both columns match height */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.contact-left{
+    background: linear-gradient(135deg,#eff6ff,#dbeafe);
+    padding: 1.8rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(30,64,175,0.06);
+}
+
+.contact-info-list{ list-style: none; padding: 0; margin: 0 0 1rem 0; }
+.contact-info-list li{ margin: 0.6rem 0; color: #0f172a; }
+.contact-info-list a{ color: #1e40af; text-decoration: none; }
+
+.contact-right .map-wrap{ width: 100%; height: 100%; min-height: 220px; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+.contact-right iframe{ width: 100%; height: 100%; min-height: 220px; border: 0; display: block; }
+
+.contact-left .cta-button{ display: inline-block; margin-top: 1rem; }
+
+/* Footer semplice */
+.site-footer{ background: #08123a; color: #fff; padding: 14px 5%; text-align: center; }
+.site-footer .footer-inner{ max-width:1200px; margin:0 auto; }
+
+@media (max-width: 900px){
+    .contact-grid{ grid-template-columns: 1fr; }
+    .contact-right{ order: -1; }
+}
+
 footer a:hover {
   opacity: 0.7;            /* effetto leggero al passaggio del mouse */
+}
+.service-banner {
+  width: 100%;
+  overflow: hidden;
+}
+
+.service-banner img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .service-banner img {
+    height: 220px;
+    object-position: center;
+  }
+}
+
+/* Smartphone orizzontale */
+@media (max-width: 768px) {
+  .service-banner img {
+    height: 180px;
+  }
+}
+
+/* Smartphone piccolo (iPhone SE, Galaxy Mini ecc.) */
+@media (max-width: 480px) {
+  .service-banner img {
+    height: 150px;
+    object-position: center;
+  }
 }
 
 .partner-logos {
@@ -744,6 +917,11 @@ footer a:hover {
   filter: grayscale(100%);
   opacity: 0.8;
   transition: all 0.3s ease;
+}
+
+/* Kyocera logo slightly larger for emphasis */
+.partner-kyocera {
+    height: 84px; /* larger than default */
 }
 
 .partner-logo img:hover {
