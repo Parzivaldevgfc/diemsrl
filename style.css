@@ -782,7 +782,14 @@ footer a:hover {
             height: 50px;
             background: rgba(255, 255, 255, 0.15);
             border-radius: 4px;
-            animation: falling linear infinite;
+            /* Use longhand so per-child duration/delay still override correctly */
+            animation-name: falling;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            /* Ensure the 0% keyframe applies during the delay so papers start off-screen and invisible */
+            animation-fill-mode: both;
+            /* Hint for the browser to optimize animations */
+            will-change: transform, opacity;
         }
 
         .falling-paper::before {
