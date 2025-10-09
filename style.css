@@ -526,26 +526,26 @@
     .partner-kyocera { height: 64px; }
 }
 
-/* Sub credits */
-.sub{
+/* Subfooter credits */
+.subfooter{
     background: #000;
     color: #fff;
     padding: 10px 5%;
 }
-.sub-inner{
+.subfooter-inner{
     max-width: 1200px;
     margin: 0 auto;
     text-align: center;
     font-size: 0.95rem;
     opacity: 0.9;
 }
-.sub .author{
+.subfooter .author{
     font-weight: 700;
     color: #ffd700; /* golden accent */
 }
 
 @media (max-width:480px){
-    .sub-inner{ font-size: 0.85rem; }
+    .subfooter-inner{ font-size: 0.85rem; }
 }
 
 /* stampante hero: visibile (regola temporanea rimossa) */
@@ -1137,4 +1137,3 @@ footer a:hover {
             }
         }
         
-
