@@ -729,6 +729,7 @@
             line-height: 1.6;
             margin: 0;
         }
+        
 
         .about-content {
             background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
@@ -914,8 +915,7 @@ footer a:hover {
 
 .partner-logo img {
   height: 60px;
-  filter: grayscale(100%);
-  opacity: 0.8;
+  filter: none;
   transition: all 0.3s ease;
 }
 
