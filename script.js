@@ -1,167 +1,131 @@
-// script.js — estratto da index.html
+// ============ PRELOADER ============
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    setTimeout(() => {
+        preloader.classList.add('fade-out');
+    }, 1500);
+});
 
-// preloader: terminal-like sequence (più veloce)
-(function(){
-    const preEl = document.getElementById('preloader');
-    const container = document.getElementById('preloader-inner');
-    // caret element
-    const caret = document.createElement('span');
-    caret.className = 'pre-caret';
-    caret.setAttribute('aria-hidden','true');
-    caret.textContent = '|';
-    // keyframes (ensure exists)
-    const css = document.createElement('style');
-    css.textContent = `@keyframes blinkCaret { 50% { opacity: 0; } }`;
-    document.head.appendChild(css);
+// ============ ELEMENTI DOM ============
+const sections = document.querySelectorAll('.section');
+const header = document.getElementById('header');
+const burger = document.querySelector('.burger');
+const navLinks = document.querySelector('.nav-links');
 
-    // helper: type text into a span, returns Promise
-    function typeText(target, text, speed=6){
-        return new Promise(resolve => {
-            let i=0;
-            function step(){
-                if(i<=text.length){
-                    target.textContent = text.slice(0,i);
-                    i++;
-                    setTimeout(step, speed);
-                } else resolve();
-            }
-            step();
-        });
+// ============ INTERSECTION OBSERVER PER SEZIONI ============
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+});
+
+sections.forEach(section => {
+    observer.observe(section);
+});
+
+// Mostra prima sezione immediatamente
+setTimeout(() => {
+    sections[0]?.classList.add('visible');
+}, 100);
+
+// ============ HEADER SCROLL EFFECT ============
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
     }
+});
 
-    // sequence of commands + outputs
-    const seq = [
-        {cmd: 'init.sh', out: 'Launching services...'},
-        {cmd: 'git clone gfcshop/core', out: 'Repository cloned.'},
-        {cmd: 'npm ci', out: 'Dependencies installed.'},
-        {cmd: 'npm run build --prod', out: 'Build complete - optimized.'},
-        {cmd: 'connect ui', out: 'UI ready. Enjoy the show!'}
-    ];
+// ============ MOBILE MENU TOGGLE ============
+burger.addEventListener('click', () => {
+    navLinks.classList.toggle('show');
+    burger.classList.toggle('toggle');
+});
 
-    window.addEventListener('load', async function(){
-        // Small ASCII art for GFC Shop (by parzival)
-        const asciiArt = [
-            "",
-            "GFC SHOP® by Parzival"
-        ].join('');
-        const artLine = document.createElement('div');
-        artLine.className = 'pre-line';
-        const artPre = document.createElement('pre');
-        artPre.style.margin = '0';
-        artPre.style.display = 'inline-block';
-        artPre.textContent = asciiArt;
-        artLine.appendChild(artPre);
-        container.appendChild(artLine);
+// Chiudi il menu quando clicchi su un link
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        navLinks.classList.remove('show');
+        burger.classList.remove('toggle');
+    });
+});
 
-        for(const item of seq){
-            const line = document.createElement('div');
-            line.className = 'pre-line';
-            const promptSpan = document.createElement('span');
-            promptSpan.className = 'cmd';
-            promptSpan.textContent = 'root@GFC:~$ ';
-            const typedSpan = document.createElement('span');
-            typedSpan.className = 'typed';
-            line.appendChild(promptSpan);
-            line.appendChild(typedSpan);
-            line.appendChild(caret);
-            container.appendChild(line);
+ 
+    // Preloader: garantisce che il preloader rimanga visibile almeno MIN_DISPLAY ms
+    (function(){
+        const MIN_DISPLAY = 1000; // almeno 5 secondi
+        const FALLBACK = 15000;   // forza rimozione dopo 15s se qualcosa va storto
+        const start = Date.now();
 
-            await typeText(typedSpan, item.cmd, 6); // più veloce
-            // small pause
-            await new Promise(r => setTimeout(r, 200));
-            // remove caret from command line
-            caret.remove();
-            // add output line
-            const outLine = document.createElement('div');
-            outLine.className = 'pre-line';
-            outLine.innerHTML = `<span class="out">${item.out}</span>`;
-            container.appendChild(outLine);
-            // reattach caret for next command
-            line.appendChild(caret);
-            await new Promise(r => setTimeout(r, 180)); // breve pausa
+        function hidePreloader() {
+            const pre = document.getElementById('preloader');
+            if (!pre) return;
+            const elapsed = Date.now() - start;
+            const wait = Math.max(0, MIN_DISPLAY - elapsed);
+            setTimeout(() => {
+                pre.classList.add('hidden');
+                pre.addEventListener('transitionend', function () {
+                    try { pre.parentNode && pre.parentNode.removeChild(pre); } catch (e) { /* ignore */ }
+                });
+            }, wait);
         }
 
-        // rapida dissolvenza
-        setTimeout(()=> {
-            preEl.style.opacity = '0';
-            setTimeout(()=> preEl.style.display = 'none', 350);
-        }, 350);
-    });
-})();
+        window.addEventListener('load', hidePreloader);
 
-// Create floating particles
-function createParticles() {
-    const particlesContainer = document.getElementById('particles');
-    if (!particlesContainer) return;
-    const particleCount = 50;
-    for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.top = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 6 + 's';
-        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
-        const colors = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b'];
-        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-        particlesContainer.appendChild(particle);
-    }
-}
-
-// Smooth scrolling
+        // fallback: rimuove comunque il preloader dopo FALLBACK ms
+        setTimeout(() => {
+            const pre = document.getElementById('preloader');
+            if (pre && !pre.classList.contains('hidden')) {
+                const elapsed = Date.now() - start;
+                const wait = Math.max(0, MIN_DISPLAY - elapsed);
+                setTimeout(() => {
+                    pre.classList.add('hidden');
+                    setTimeout(()=> pre.parentNode && pre.parentNode.removeChild(pre), 700);
+                }, wait);
+            }
+        }, FALLBACK);
+    })();
+   
+// ============ SMOOTH SCROLLING ============
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+    anchor.addEventListener('click', (e) => {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const target = document.querySelector(anchor.getAttribute('href'));
+        if (target) {
+            const headerHeight = header.offsetHeight;
+            const targetPosition = target.offsetTop - headerHeight;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
     });
 });
 
-// Scroll animations
-const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
-const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('animated'); });
-}, observerOptions);
-document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+// ============ HERO PRINTER ANIMATION ON VIEW (respects prefers-reduced-motion) ============
+(function(){
+    const printerEl = document.querySelector('#home .printer');
+    if (!printerEl) return;
+    // If user prefers reduced motion, don't animate
+    const m = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (m && m.matches) return;
 
-// Stagger animations for cards
-document.querySelectorAll('.service-card').forEach((card, index) => { card.style.transitionDelay = `${index * 0.15}s`; });
+    const heroObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                printerEl.classList.add('animate');
+            } else {
+                printerEl.classList.remove('animate');
+            }
+        });
+    }, { threshold: 0.35 });
 
-// Initialize particles
-createParticles();
-
-// Gentle random movement (non-destructive)
-setInterval(() => {
-    document.querySelectorAll('.particle').forEach(p => {
-        const randomX = Math.random() * 10 - 5;
-        const randomY = Math.random() * 10 - 5;
-        const prev = p.style.transform || '';
-        p.style.transform = `${prev} translate(${randomX}px, ${randomY}px)`;
-    });
-}, 3000);
-
-// Header background opacity on scroll
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-    if (!header) return;
-    const scrolled = window.pageYOffset;
-    const opacity = Math.min(0.95, 0.8 + (scrolled / 500) * 0.15);
-    header.style.background = `rgba(15, 15, 35, ${opacity})`;
-});
-
-// Back to top button logic
-(function() {
-    const btn = document.getElementById('backToTop');
-    if (!btn) return;
-    const style = document.createElement('style');
-    style.innerHTML = `
-        #backToTop { position: fixed; right: 24px; bottom: 24px; width:48px; height:48px; border-radius:12px; border:none;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6); color:#fff; font-size:20px; box-shadow:0 8px 24px rgba(99,102,241,0.3);
-            cursor:pointer; opacity:0; transform:translateY(20px); transition:opacity 0.3s ease, transform 0.3s ease; z-index:1500; }
-        #backToTop.show { opacity:1; transform:translateY(0); }
-        @media (max-width: 480px) { #backToTop { right:16px; bottom:16px; width:44px; height:44px; } }`;
-    document.head.appendChild(style);
-    function checkScroll() { if (window.pageYOffset > 300) btn.classList.add('show'); else btn.classList.remove('show'); }
-    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    window.addEventListener('scroll', checkScroll);
-    checkScroll();
+    heroObserver.observe(document.getElementById('home'));
 })();
