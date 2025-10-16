@@ -242,6 +242,7 @@
   overflow: hidden;
 }
 
+
 .hero::before {
   content: '';
   position: absolute;
