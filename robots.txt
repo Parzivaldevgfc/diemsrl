@@ -1,3 +1,3 @@
 User-agent: *
 Disallow:
-Sitemap: https://www.tuodominio.it/sitemap.xml
+Sitemap: https://www.diemsrl.it/sitemap.xml

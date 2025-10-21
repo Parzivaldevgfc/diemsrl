@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="750" height="200" viewBox="0 0 750 200">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eef2ff"/>
+      <stop offset="100%" stop-color="#dbeafe"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="750" height="200" fill="url(#g)"/>
+  <rect x="8" y="8" width="734" height="184" rx="10" ry="10" fill="none" stroke="#93c5fd" stroke-width="2"/>
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="36" fill="#1e40af" font-weight="700">
+    Offerte e Sconti
+  </text>
+</svg>
