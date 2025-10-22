@@ -703,6 +703,15 @@
              box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
             } 
            
+ .cta-button3 { 
+            display: inline-block; 
+            padding: 15px 40px; 
+         
+            animation: fadeInUp 1s ease 0.6s backwards;
+             box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
+            } 
+
+
         .section {
             padding: 80px 5%;
             max-width: 1200px;
@@ -954,6 +963,17 @@
 
 /* Footer semplice */
 .site-footer{ background: #3b82f6; color: #fff; padding: 14px 5%; text-align: center; }
+
+/* Responsive: sezione preventivo nella landing */
+@media (max-width: 900px){
+  #preventivo > div{ grid-template-columns: 1fr !important; gap: 14px !important; }
+}
+@media (max-width: 600px){
+  #preventivo{ padding-left: 5%; padding-right: 5%; }
+  #preventivo select,
+  #preventivo input[type="number"]{ font-size: 16px; /* evita zoom iOS */ }
+  #preventivo .cta-button2{ width: 100%; text-align: center; padding: 12px 18px; }
+}
 .site-footer .footer-inner{ max-width:1200px; margin:0 auto; }
 
 @media (max-width: 900px){

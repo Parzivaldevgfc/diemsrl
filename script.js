@@ -129,3 +129,64 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
     heroObserver.observe(document.getElementById('home'));
 })();
+
+// ============ PREVENTIVO (landing) ============
+(function(){
+  const prezzo={"a4-mono":{base:29,perPage:0.009},"a4-colore":{base:49,perPage:0.045},"a3-colore":{base:79,perPage:0.055}};
+  const sconto={12:0,24:0.05,36:0.10,48:0.12};
+  const serviziMap={standard:0,full:10};
+
+  const m=document.getElementById('prev-modello');
+  const d=document.getElementById('prev-durata');
+  const v=document.getElementById('prev-volume');
+  const s=document.getElementById('prev-servizi');
+  const mens=document.getElementById('prev-mensile');
+  const tot=document.getElementById('prev-totale');
+  const wa=document.getElementById('prev-waBtn');
+  const detBase=document.getElementById('prev-detBase');
+  const detPagine=document.getElementById('prev-detPagine');
+  const detServizi=document.getElementById('prev-detServizi');
+  const detSconto=document.getElementById('prev-detSconto');
+
+  if(!m || !d || !v || !s || !mens || !tot) return;
+
+  function eur(n){return n.toLocaleString('it-IT',{style:'currency',currency:'EUR',minimumFractionDigits:2});}
+
+  function calc(){
+    const mm=m.value;
+    const dd=Number(d.value);
+    const vv=Math.max(0,Number(v.value||0));
+    const ss=s.value;
+
+    const cfg=prezzo[mm];
+    const add=serviziMap[ss]||0;
+    const disc=sconto[dd]||0;
+
+    const costoBase=cfg.base;
+    const costoPagine=vv*cfg.perPage;
+    const costoServizi=add;
+    const lordo=costoBase+costoPagine+costoServizi;
+    const valoreSconto=lordo*disc;
+    const mensile=Math.max(0,lordo - valoreSconto);
+    const totale=mensile*dd;
+
+    mens.textContent=eur(mensile);
+    tot.textContent=eur(totale);
+    if(detBase) detBase.textContent=eur(costoBase);
+    if(detPagine) detPagine.textContent=eur(costoPagine);
+    if(detServizi) detServizi.textContent=eur(costoServizi);
+    if(detSconto) detSconto.textContent='- '+eur(valoreSconto);
+
+    const label={"a4-mono":"A4 Monocromatica","a4-colore":"A4 Colore","a3-colore":"A3 Colore"}[mm];
+    const srv= ss==='full'? 'Full service (toner inclusi)':'Assistenza + parti usura';
+    const txt=encodeURIComponent(`Salve DIEM Srl, vorrei un preventivo.\nModello: ${label}\nVolumi: ${vv} pagine/mese\nDurata: ${dd} mesi\nServizi: ${srv}\nStima canone mensile: ${eur(mensile)}\nStima totale periodo: ${eur(totale)}`);
+    if(wa) wa.href=`https://wa.me/3341056059?text=${txt}`;
+  }
+
+  ['change','input'].forEach(ev=>{ m.addEventListener(ev,calc); d.addEventListener(ev,calc); v.addEventListener(ev,calc); s.addEventListener(ev,calc); });
+  const btnCalcola=document.getElementById('prev-btnCalcola');
+  const btnReset=document.getElementById('prev-btnReset');
+  if(btnCalcola) btnCalcola.addEventListener('click',calc);
+  if(btnReset) btnReset.addEventListener('click',()=>{ m.value='a4-mono'; d.value='36'; v.value=2000; s.value='full'; calc(); });
+  calc();
+})();
