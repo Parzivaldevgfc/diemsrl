@@ -29,26 +29,26 @@
         <link rel="canonical" href="https://www.diemsrl.it/">
         <script type="application/ld+json">
         {
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            "name": "DIEM SRL",
-            "image": "https://www.diemsrl.it/img/logo.png",
-            "@id": "https://www.diemsrl.it/",
-            "url": "https://www.diemsrl.it/",
-            "telephone": "+390874482229",
-            "email": "info@diemsrl.it",
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "Via Tommaso Mosca, 4",
-                "addressLocality": "Campobasso",
-                "postalCode": "86100",
-                "addressRegion": "CB",
-                "addressCountry": "IT"
-            },
-            "priceRange": "€",
-            "description": "DIEM SRL - Office Automation: multifunzione, noleggio, assistenza e soluzioni gestionali.",
-            "sameAs": []
-        }
+     "@context": "https://schema.org",
+     "@type": "LocalBusiness",
+     "name": "DIEM SRL",
+     "image": "https://www.diemsrl.it/img/logo.png",
+     "@id": "https://www.diemsrl.it/",
+     "url": "https://www.diemsrl.it/",
+     "telephone": "+390874482229",
+     "email": "info@diemsrl.it",
+     "address": {
+     "@type": "PostalAddress",
+     "streetAddress": "Via Tommaso Mosca, 4",
+     "addressLocality": "Campobasso",
+     "postalCode": "86100",
+     "addressRegion": "CB",
+     "addressCountry": "IT"
+  },
+  "priceRange": "€",
+  "description": "DIEM Srl offre fotocopiatrici, software gestionali e assistenza IT a Campobasso e in Molise.",
+  "sameAs": []
+}
         </script>
     <!-- Preloader styles (inline to avoid overwriting existing style.css) -->
     
@@ -179,12 +179,14 @@
 
     <section id="preventivo" class="section">
         <h2 class="section-title">Calcola un preventivo</h2>
-        <p style="text-align:center; color:#334155; margin: -6px 0 16px;">Stima indicativa IVA esclusa. Per offerte su misura scrivici.</p>
+        <p style="text-align:center; color:#334155; margin: -6px 0 8px;">Stima indicativa IVA esclusa. Per offerte su misura scrivici.</p>
+        <p style="text-align:center; color:#475569; font-size:0.95rem; margin: 0 0 16px;">Canone base con full service (toner, ricambi, manutenzione), trasporto e installazione in Molise e province limitrofe (fino a 3 PC).</p>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; align-items:start; max-width:1000px; margin:0 auto;">
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:14px;">
                 <label style="font-weight:600;">Tipologia macchina</label>
                 <select id="prev-modello" style="width:100%; margin:6px 0 10px; padding:10px; border:1px solid #cbd5e1; border-radius:8px;">
-                    <option value="a4-mono">A4 Monocromatica</option>
+                    <option value="a4-mono">A4 Bianco e Nero</option>
+                    <option value="a3-mono">A3 Bianco e Nero</option>
                     <option value="a4-colore">A4 Colore</option>
                     <option value="a3-colore">A3 Colore</option>
                 </select>
@@ -194,16 +196,24 @@
                     <option value="12">12 mesi</option>
                     <option value="24">24 mesi (-5%)</option>
                     <option value="36" selected>36 mesi (-10%)</option>
-                    <option value="48">48 mesi (-12%)</option>
+                    <option value="48">48 mesi (-15%)</option>
+                    <option value="60">60 mesi (-20%)</option>
                 </select>
 
-                <label style="font-weight:600;">Volumi medi mensili</label>
-                <input id="prev-volume" type="number" min="0" step="100" value="2000" style="width:100%; margin:6px 0 10px; padding:10px; border:1px solid #cbd5e1; border-radius:8px;" placeholder="es. 2000 pagine">
+                <div id="prev-volume-bn-wrap">
+                    <label style="font-weight:600;">Pagine B/N al mese</label>
+                    <input id="prev-volume" type="number" min="0" step="100" value="2000" style="width:100%; margin:6px 0 10px; padding:10px; border:1px solid #cbd5e1; border-radius:8px;" placeholder="es. 2000 pagine B/N">
+                </div>
+
+                <div id="prev-volume-colore-wrap" style="display:none;">
+                    <label style="font-weight:600;">Pagine Colore al mese</label>
+                    <input id="prev-volume-colore" type="number" min="0" step="50" value="0" style="width:100%; margin:6px 0 10px; padding:10px; border:1px solid #cbd5e1; border-radius:8px;" placeholder="es. 200 pagine Colore">
+                </div>
 
                 <label style="font-weight:600;">Servizi inclusi</label>
                 <select id="prev-servizi" style="width:100%; margin:6px 0 12px; padding:10px; border:1px solid #cbd5e1; border-radius:8px;">
-                    <option value="standard">Assistenza + parti usura</option>
-                    <option value="full" selected>Full service (toner inclusi)</option>
+                    <option value="standard">Full service incluso</option>
+                    <option value="full" selected>Full service (toner, ricambi, manutenzione)</option>
                 </select>
 
                 <div style="display:flex; gap:10px; flex-wrap:wrap;">
@@ -215,13 +225,14 @@
             <div style="background:#0f172a; color:#e2e8f0; border-radius:10px; padding:16px;">
                 <h3 style="margin:0 0 6px; color:#ffcc80;">Stima canone</h3>
                 <p>Mensile: <strong id="prev-mensile">—</strong></p>
-                <p>Totale periodo: <strong id="prev-totale">—</strong></p>
+                <!-- <p>Totale periodo: <strong id="prev-totale">—</strong></p> --> <!-- 🔸 RIGA COMMENTATA SU RICHIESTA CLIENTE -->
                 <div style="border-top:1px solid rgba(255,255,255,0.15); margin:8px 0 10px; padding-top:10px; font-size:0.95rem; color:#cbd5e1;">
                     <p style="margin:2px 0;">Base macchina: <span id="prev-detBase">—</span></p>
                     <p style="margin:2px 0;">Costo pagine: <span id="prev-detPagine">—</span></p>
                     <p style="margin:2px 0;">Servizi: <span id="prev-detServizi">—</span></p>
                     <p style="margin:2px 0;">Sconto durata: <span id="prev-detSconto">—</span></p>
                 </div>
+                <p id="prev-alert" style="margin:6px 0 0; color:#ff7b7b; font-weight:600; display:none;">ALERT: Contattami per scoprire se riesci a risparmiare fino al 50% con la nostra promo greenline .</p>
                 <a id="prev-waBtn" class="cta-button2" href="https://wa.me/3341056059" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:8px; margin-top:10px; background:#25D366;">
                     <img src="img/watsapp.png" alt="WhatsApp" style="width:20px; height:20px;"> Richiedi su WhatsApp
                 </a>
@@ -232,7 +243,7 @@
        <section id="offerte" class="section">
         <h2 class="section-title">Offerte e Sconti</h2>
         <div class="offerte-banner">
-            <img src="img/plc.png" alt="Offerte e Sconti" width="750" height="200" loading="lazy">
+            <img src="img/banner750x200.png" alt="Offerte e Sconti" width="750" height="200" loading="lazy">
         </div>
     </section>
 

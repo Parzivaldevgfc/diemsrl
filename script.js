@@ -132,38 +132,103 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // ============ PREVENTIVO (landing) ============
 (function(){
-  const prezzo={"a4-mono":{base:29,perPage:0.009},"a4-colore":{base:49,perPage:0.045},"a3-colore":{base:79,perPage:0.055}};
-  const sconto={12:0,24:0.05,36:0.10,48:0.12};
-  const serviziMap={standard:0,full:10};
+  const modelli = {
+    "a4-mono":   { base: 15.00, inclAnnoBn: 2500, costoBn: 0.0098, costoCol: 0 },
+    "a3-mono":   { base: 30.00, inclAnnoBn: 8000, costoBn: 0.0090, costoCol: 0 },
+    "a4-colore": { base: 25.00, inclAnnoBn: 2500, costoBn: 0.0095, costoCol: 0.085 },
+    "a3-colore": { base: 40.00, inclAnnoBn: 8000, costoBn: 0.0095, costoCol: 0.078 }
+  };
+
+  const sconto={12:0,24:0.05,36:0.10,48:0.15,60:0.20};
+  const serviziMap={standard:0,full:0};
 
   const m=document.getElementById('prev-modello');
   const d=document.getElementById('prev-durata');
-  const v=document.getElementById('prev-volume');
+  const vBn=document.getElementById('prev-volume');
+  const vCol=document.getElementById('prev-volume-colore');
+  const vColWrap=document.getElementById('prev-volume-colore-wrap');
+  const vBnWrap=document.getElementById('prev-volume-bn-wrap');
   const s=document.getElementById('prev-servizi');
   const mens=document.getElementById('prev-mensile');
   const tot=document.getElementById('prev-totale');
   const wa=document.getElementById('prev-waBtn');
+  const alertBox=document.getElementById('prev-alert');
   const detBase=document.getElementById('prev-detBase');
   const detPagine=document.getElementById('prev-detPagine');
   const detServizi=document.getElementById('prev-detServizi');
   const detSconto=document.getElementById('prev-detSconto');
 
-  if(!m || !d || !v || !s || !mens || !tot) return;
+  if(!m || !d || !vBn || !s || !mens) return; // tolto !tot
 
   function eur(n){return n.toLocaleString('it-IT',{style:'currency',currency:'EUR',minimumFractionDigits:2});}
+
+  function aggiornaVisibilita(){
+    const cfg = modelli[m.value];
+    const isColore = cfg && cfg.costoCol > 0;
+    if(vColWrap){ vColWrap.style.display = isColore ? '' : 'none'; }
+    if(vBnWrap){ vBnWrap.style.display = isColore ? 'none' : ''; }
+  }
+
+  function bracketDiscount(value, tiers){
+    if(value<=0) return {disc:0, alert:false};
+    for(const t of tiers){ if(value <= t.max) return {disc:t.disc, alert:false}; }
+    return {disc:tiers[tiers.length-1].disc, alert:true};
+  }
+
+  function getBnDiscount(machineType, size, overYear){
+    if(machineType==='mono'){
+      const tiers=[{max:15000,disc:0.10},{max:25000,disc:0.20},{max:35000,disc:0.30}];
+      return bracketDiscount(overYear, tiers);
+    } else {
+      if(size==='a4'){
+        const tiers=[{max:15000,disc:0.20},{max:25000,disc:0.30},{max:35000,disc:0.35}];
+        return bracketDiscount(overYear, tiers);
+      } else {
+        const tiers=[{max:15000,disc:0.15},{max:25000,disc:0.25},{max:35000,disc:0.37}];
+        return bracketDiscount(overYear, tiers);
+      }
+    }
+  }
+
+  function getColDiscount(size, colYear){
+    if(size==='a4'){
+      const tiers=[{max:15000,disc:0.20},{max:25000,disc:0.30},{max:35000,disc:0.40}];
+      return bracketDiscount(colYear, tiers);
+    } else {
+      const tiers=[{max:15000,disc:0.25},{max:25000,disc:0.35},{max:35000,disc:0.45}];
+      return bracketDiscount(colYear, tiers);
+    }
+  }
 
   function calc(){
     const mm=m.value;
     const dd=Number(d.value);
-    const vv=Math.max(0,Number(v.value||0));
+    const vvBn=Math.max(0,Number(vBn.value||0));
+    const vvCol=Math.max(0,Number((vCol && vCol.value)||0));
     const ss=s.value;
 
-    const cfg=prezzo[mm];
+    const cfg=modelli[mm];
+    if(!cfg) return;
     const add=serviziMap[ss]||0;
     const disc=sconto[dd]||0;
 
     const costoBase=cfg.base;
-    const costoPagine=vv*cfg.perPage;
+    const inclMensileBn = (cfg.inclAnnoBn||0)/12;
+    const eccedenzaBn = Math.max(0, vvBn - inclMensileBn);
+
+    const isColor = (mm.indexOf('colore')!==-1);
+    const size = mm.startsWith('a4') ? 'a4' : 'a3';
+
+    const bnYearOver = Math.max(0, vvBn*12 - (cfg.inclAnnoBn||0));
+    const {disc: bnDisc, alert: bnAlert} = getBnDiscount(isColor? 'colore':'mono', size, bnYearOver);
+    const {disc: colDisc, alert: colAlert} = isColor ? getColDiscount(size, vvCol*12) : {disc:0, alert:false};
+
+    let costoPagine = 0;
+    costoPagine += eccedenzaBn * (cfg.costoBn||0) * (1 - bnDisc);
+    if(isColor){
+      costoPagine += vvCol * cfg.costoCol * (1 - colDisc);
+    }
+
     const costoServizi=add;
     const lordo=costoBase+costoPagine+costoServizi;
     const valoreSconto=lordo*disc;
@@ -171,22 +236,50 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const totale=mensile*dd;
 
     mens.textContent=eur(mensile);
-    tot.textContent=eur(totale);
+    // tot.textContent=eur(totale); // 🔸 TOTALE PERIODO NASCOSTO SU RICHIESTA CLIENTE
     if(detBase) detBase.textContent=eur(costoBase);
     if(detPagine) detPagine.textContent=eur(costoPagine);
     if(detServizi) detServizi.textContent=eur(costoServizi);
     if(detSconto) detSconto.textContent='- '+eur(valoreSconto);
 
-    const label={"a4-mono":"A4 Monocromatica","a4-colore":"A4 Colore","a3-colore":"A3 Colore"}[mm];
+    const anyAlert = bnAlert || colAlert;
+    if(alertBox){
+      if(anyAlert){
+        alertBox.style.display='';
+      } else {
+        alertBox.style.display='none';
+      }
+    }
+
+    const label={
+      "a4-mono":"A4 Bianco e Nero",
+      "a3-mono":"A3 Bianco e Nero",
+      "a4-colore":"A4 Colore",
+      "a3-colore":"A3 Colore"
+    }[mm];
     const srv= ss==='full'? 'Full service (toner inclusi)':'Assistenza + parti usura';
-    const txt=encodeURIComponent(`Salve DIEM Srl, vorrei un preventivo.\nModello: ${label}\nVolumi: ${vv} pagine/mese\nDurata: ${dd} mesi\nServizi: ${srv}\nStima canone mensile: ${eur(mensile)}\nStima totale periodo: ${eur(totale)}`);
+    const volumiRiga = (cfg.costoCol && cfg.costoCol>0)
+        ? `Pagine B/N: ${vvBn}/mese\nPagine Colore: ${vvCol}/mese`
+        : `Pagine B/N: ${vvBn}/mese`;
+    
+    // 🔸 Rimossa la riga con "Stima totale periodo" dal messaggio WhatsApp
+    const txt=encodeURIComponent(`Salve DIEM Srl, vorrei un preventivo.\nModello: ${label}\n${volumiRiga}\nDurata: ${dd} mesi\nServizi: ${srv}\nStima canone mensile: ${eur(mensile)}`);
     if(wa) wa.href=`https://wa.me/3341056059?text=${txt}`;
   }
 
-  ['change','input'].forEach(ev=>{ m.addEventListener(ev,calc); d.addEventListener(ev,calc); v.addEventListener(ev,calc); s.addEventListener(ev,calc); });
+  ['change','input'].forEach(ev=>{
+    m.addEventListener(ev,(e)=>{ aggiornaVisibilita(); calc(); });
+    d.addEventListener(ev,calc);
+    vBn.addEventListener(ev,calc);
+    if(vCol) vCol.addEventListener(ev,calc);
+    s.addEventListener(ev,calc);
+  });
   const btnCalcola=document.getElementById('prev-btnCalcola');
   const btnReset=document.getElementById('prev-btnReset');
   if(btnCalcola) btnCalcola.addEventListener('click',calc);
-  if(btnReset) btnReset.addEventListener('click',()=>{ m.value='a4-mono'; d.value='36'; v.value=2000; s.value='full'; calc(); });
+  if(btnReset) btnReset.addEventListener('click',()=>{
+    m.value='a4-mono'; d.value='36'; vBn.value=2000; if(vCol) vCol.value=0; s.value='full'; aggiornaVisibilita(); calc();
+  });
+  aggiornaVisibilita();
   calc();
 })();
