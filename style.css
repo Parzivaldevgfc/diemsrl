@@ -1,4 +1,4 @@
-* {
+﻿* {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -271,7 +271,7 @@
   animation: fadeInUp 1s ease 0.2s backwards;
 }
 
-/* 📱 Tablet */
+/* Tablet */
 @media (max-width: 1024px) {
   .hero {
     padding: 120px 5% 100px;
@@ -286,7 +286,7 @@
   }
 }
 
-/* 📱 Smartphone orizzontale */
+/* Smartphone orizzontale */
 @media (max-width: 768px) {
   .hero {
     padding: 100px 5% 80px;
@@ -302,7 +302,7 @@
   }
 }
 
-/* 📱 Smartphone piccolo (es. iPhone SE) */
+/* Smartphone piccolo (es. iPhone SE) */
 @media (max-width: 480px) {
   .hero {
     padding: 80px 5% 60px;
@@ -327,13 +327,13 @@
     color: white;
 }
 
-/* Chi siamo */
-/*chi-siamo {
+/* Chi siamo (esempio di tema sezione)
+#chi-siamo {
     background: url("img/bg-chi-siamo.jpg") center/cover no-repeat;
     background-size: cover;
     color: white;
 }
---]
+*/
 /* Partner */
 .partners {
     background: url("img/bg-partners.jpg") center/cover no-repeat;
@@ -496,7 +496,6 @@
             transform: translateX(-50%);
             box-shadow: 0 10px 26px rgba(0,0,0,0.28);
             border-radius: 3px;
-            /* pause by default; animation enabled when .printer.animate is present */
             animation-play-state: paused;
         }
 
@@ -667,7 +666,7 @@
             }
         }
 
-      .cta-button {
+.cta-button {
     display: inline-block;
     padding: 15px 40px;
     background: white;
@@ -678,38 +677,35 @@
     transition: all 0.3s;
     animation: fadeInUp 1s ease 0.6s backwards;
     box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-
-    /* Nuovo modo per posizionarlo più in alto */
+    /* Posizionamento pulsante piu in alto */
     position: relative;
-    top: -50px; /* sposta verso l’alto di 80px, modifica se serve */
+    top: -50px; /* Sposta verso l'alto di 80px, modifica se serve */
 }
 
-        .cta-button:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
+.cta-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
 
+.cta-button2 {
+    display: inline-block;
+    padding: 15px 40px;
+    background: white;
+    color: #1e40af;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: all 0.3s;
+    animation: fadeInUp 1s ease 0.6s backwards;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
 
-        .cta-button2 { 
-            display: inline-block; 
-            padding: 15px 40px; 
-            background: white; 
-            color: #1e40af; 
-            text-decoration: none; 
-            border-radius: 50px; 
-            font-weight: bold; 
-            transition: all 0.3s; 
-            animation: fadeInUp 1s ease 0.6s backwards;
-             box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
-            } 
-           
- .cta-button3 { 
-            display: inline-block; 
-            padding: 15px 40px; 
-         
-            animation: fadeInUp 1s ease 0.6s backwards;
-             box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
-            } 
+.cta-button3 {
+    display: inline-block;
+    padding: 15px 40px;
+    animation: fadeInUp 1s ease 0.6s backwards;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
 
 
         .section {
@@ -1048,17 +1044,14 @@ footer a:hover {
 
 .partner-logo img {
   height: 70px;
-  filter: none;
   transition: all 0.3s ease;
 }
 
 /* Kyocera logo slightly larger for emphasis */
 .partner-kyocera {
-    height: 84px; /* larger than default */
 }
 
 .partner-logo img:hover {
-  filter: grayscale(0%);
   opacity: 1;
   transform: scale(1.05);
 }
@@ -1269,3 +1262,5 @@ footer a:hover {
                 box-shadow: 0 6px 0 #3b82f6, 0 12px 0 #3b82f6, 0 18px 0 #60a5fa;
             }
         }
+
+

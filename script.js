@@ -1,10 +1,5 @@
-// ============ PRELOADER ============
-window.addEventListener('load', () => {
-    const preloader = document.getElementById('preloader');
-    setTimeout(() => {
-        preloader.classList.add('fade-out');
-    }, 1500);
-});
+﻿// ============ PRELOADER ============
+// Unificato: gestione preloader nell'IIFE sotto (classe .hidden)
 
 // ============ ELEMENTI DOM ============
 const sections = document.querySelectorAll('.section');
@@ -59,7 +54,7 @@ document.querySelectorAll('.nav-links a').forEach(link => {
  
     // Preloader: garantisce che il preloader rimanga visibile almeno MIN_DISPLAY ms
     (function(){
-        const MIN_DISPLAY = 1000; // almeno 5 secondi
+    const MIN_DISPLAY = 1000; // almeno 1 secondo
         const FALLBACK = 15000;   // forza rimozione dopo 15s se qualcosa va storto
         const start = Date.now();
 
@@ -235,8 +230,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const mensile=Math.max(0,lordo - valoreSconto);
     const totale=mensile*dd;
 
-    mens.textContent=eur(mensile);
-    // tot.textContent=eur(totale); // 🔸 TOTALE PERIODO NASCOSTO SU RICHIESTA CLIENTE
+    if(mens) mens.textContent = eur(mensile);
+    // tot.textContent=eur(totale); // Totale periodo nascosto su richiesta del cliente
     if(detBase) detBase.textContent=eur(costoBase);
     if(detPagine) detPagine.textContent=eur(costoPagine);
     if(detServizi) detServizi.textContent=eur(costoServizi);
@@ -251,6 +246,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       }
     }
 
+    // Nota: riga "Stima totale periodo" rimossa dal messaggio WhatsApp su richiesta cliente
+
     const label={
       "a4-mono":"A4 Bianco e Nero",
       "a3-mono":"A3 Bianco e Nero",
@@ -262,7 +259,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         ? `Pagine B/N: ${vvBn}/mese\nPagine Colore: ${vvCol}/mese`
         : `Pagine B/N: ${vvBn}/mese`;
     
-    // 🔸 Rimossa la riga con "Stima totale periodo" dal messaggio WhatsApp
     const txt=encodeURIComponent(`Salve DIEM Srl, vorrei un preventivo.\nModello: ${label}\n${volumiRiga}\nDurata: ${dd} mesi\nServizi: ${srv}\nStima canone mensile: ${eur(mensile)}`);
     if(wa) wa.href=`https://wa.me/3341056059?text=${txt}`;
   }
@@ -283,3 +279,5 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   aggiornaVisibilita();
   calc();
 })();
+
+
